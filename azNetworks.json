@@ -1,0 +1,24 @@
+{
+"VirtualNetworks":[
+  {
+	  "Purpose":"PRD", 
+		"vNET":"10.0.0.0/16", 
+		"subNET":"10.0.0.0/24"
+		},
+  {
+	  "Purpose":"NETWORK", 
+		"vNET":"10.1.0.0/16", 
+		"subNET":"10.1.0.0/24"
+	  },
+  {
+	  "Purpose":"AVD", 
+		"vNET":"10.2.0.0/16", 
+		"subNET":"10.2.0.0/24"
+	  },
+  {
+	  "Purpose":"SIG", 
+		"vNET":"10.3.0.0/16", 
+		"subNET":"10.3.0.0/24"
+	  }
+					]
+}
