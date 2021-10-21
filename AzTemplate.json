@@ -32,7 +32,7 @@
             "metadata": {
                 "description": "The location of resources, such as templates and DSC modules, that the template depends on"
             },
-            "defaultValue": "https://github.com/LimeNetworks/AzureDeploy"
+            "defaultValue": "https://github.com/AadSchimmel/AzDefault/blob/master/"
         },
         "GithubLocationSasToken": {
             "type": "securestring",
@@ -469,7 +469,7 @@
                         "typeHandlerVersion": "2.19",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('DSC/CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
+                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
                             "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
                             "Properties": {
                                 "DomainName": "[parameters('domainName')]",
@@ -544,7 +544,7 @@
                         "typeHandlerVersion": "2.19",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('DSC/CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
+                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
                             "ConfigurationFunction": "CreateADPDC.ps1\\DomainJoin",
                             "Properties": {
                                 "DomainName": "[parameters('domainName')]",
@@ -619,7 +619,7 @@
                         "typeHandlerVersion": "2.19",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('DSC/CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
+                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
                             "ConfigurationFunction": "CreateADPDC.ps1\\DomainJoin",
                             "Properties": {
                                 "DomainName": "[parameters('domainName')]",
