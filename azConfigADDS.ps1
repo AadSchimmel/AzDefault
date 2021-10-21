@@ -6,7 +6,6 @@ while ($installAD.'InstallState' -ne 'Installed'){
     } catch {
         $ErrorMessage = $_.Exception.Message
         Write-Host $ErrorMessage
-        #($CheckADVM.Statuses[1].DisplayStatus -eq 'Running')
     }
 }
 Write-Host "Installed ADDS." -ForegroundColor Yellow

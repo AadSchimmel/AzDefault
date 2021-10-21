@@ -1,0 +1,679 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the administrator account of the new VM and domain"
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The password for the administrator account of the new VM and domain"
+            }
+        },
+        "domainName": {
+            "type": "string",
+            "metadata": {
+                "description": "The FQDN of the Active Directory Domain to be created"
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_B2ms",
+            "metadata": {
+                "description": "Size of the VM for the controller"
+            }
+        },
+        "GithubLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "The location of resources, such as templates and DSC modules, that the template depends on"
+            },
+            "defaultValue": "https://github.com/LimeNetworks/AzureDeploy"
+        },
+        "GithubLocationSasToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Auto-generated token to access GithubLocation. Leave it blank unless you need to provide your own value."
+            },
+            "defaultValue": ""
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "ADVMName": {
+            "type": "string",
+            "defaultValue": "AD01",
+            "metadata": {
+                "description": "Virtual machine name."
+            }
+        },
+        "SQLVMName": {
+            "type": "string",
+            "defaultValue": "SQL01",
+            "metadata": {
+                "description": "Virtual machine name."
+            }
+        },
+        "APPVMName": {
+            "type": "string",
+            "defaultValue": "APP01",
+            "metadata": {
+                "description": "Virtual machine name."
+            }
+        },
+        "PRDNetworkName": {
+            "type": "string",
+            "defaultValue": "adVNET",
+            "metadata": {
+                "description": "Virtual network name."
+            }
+        },
+        "NETNetworkName": {
+            "type": "string",
+            "defaultValue": "netVNET",
+            "metadata": {
+                "description": "Virtual network name."
+            }
+        },
+        "AVDNetworkName": {
+            "type": "string",
+            "defaultValue": "avdVNET",
+            "metadata": {
+                "description": "Virtual network name."
+            }
+        },
+        "SIGNetworkName": {
+            "type": "string",
+            "defaultValue": "sigVNET",
+            "metadata": {
+                "description": "Virtual network name."
+            }
+        },
+        "PRDNetworkAddressRange": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "Virtual network address range."
+            }
+        },
+        "NETNetworkAddressRange": {
+            "type": "string",
+            "defaultValue": "10.1.0.0/16",
+            "metadata": {
+                "description": "Virtual network address range."
+            }
+        },
+        "AVDNetworkAddressRange": {
+            "type": "string",
+            "defaultValue": "10.2.0.0/16",
+            "metadata": {
+                "description": "Virtual network address range."
+            }
+        },
+        "SIGNetworkAddressRange": {
+            "type": "string",
+            "defaultValue": "10.3.0.0/16",
+            "metadata": {
+                "description": "Virtual network address range."
+            }
+        },
+        "inboundNatRulesName": {
+            "type": "string",
+            "defaultValue": "adRDP",
+            "metadata": {
+                "description": "Inbound NAT rules name."
+            }
+        },
+        "ADNetworkInterfaceName": {
+            "type": "string",
+            "defaultValue": "adNic",
+            "metadata": {
+                "description": "Network interface name."
+            }
+        },
+        "SQLNetworkInterfaceName": {
+            "type": "string",
+            "defaultValue": "sqlNic",
+            "metadata": {
+                "description": "Network interface name."
+            }
+        },
+        "APPNetworkInterfaceName": {
+            "type": "string",
+            "defaultValue": "appNic",
+            "metadata": {
+                "description": "Network interface name."
+            }
+        },
+        "ADprivateIPAddress": {
+            "type": "string",
+            "defaultValue": "10.0.0.4",
+            "metadata": {
+                "description": "Private IP address."
+            }
+        },
+        "PRDsubnetName": {
+            "type": "string",
+            "defaultValue": "adSubnet",
+            "metadata": {
+                "description": "Subnet name."
+            }
+        },
+        "PRDsubnetRange": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24",
+            "metadata": {
+                "description": "Subnet IP range."
+            }
+        },
+        "NETsubnetName": {
+            "type": "string",
+            "defaultValue": "netSubnet",
+            "metadata": {
+                "description": "Subnet name."
+            }
+        },
+        "NETsubnetRange": {
+            "type": "string",
+            "defaultValue": "10.1.0.0/24",
+            "metadata": {
+                "description": "Subnet IP range."
+            }
+        },
+        "AVDsubnetName": {
+            "type": "string",
+            "defaultValue": "avdSubnet",
+            "metadata": {
+                "description": "Subnet name."
+            }
+        },
+        "AVDsubnetRange": {
+            "type": "string",
+            "defaultValue": "10.2.0.0/24",
+            "metadata": {
+                "description": "Subnet IP range."
+            }
+        },
+        "SIGsubnetName": {
+            "type": "string",
+            "defaultValue": "sigSubnet",
+            "metadata": {
+                "description": "Subnet name."
+            }
+        },
+        "SIGsubnetRange": {
+            "type": "string",
+            "defaultValue": "10.3.0.0/24",
+            "metadata": {
+                "description": "Subnet IP range."
+            }
+        },
+        "ADPublicIP": {
+            "type": "string",
+            "defaultValue": "adPublicIP",
+            "metadata": {
+                "description": "Subnet IP range."
+            }
+        },
+        "availabilitySetName": {
+            "type": "string",
+            "defaultValue": "adAvailabiltySet",
+            "metadata": {
+                "description": "Availability set name."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-08-01",
+            "name": "[parameters('ADPublicIP')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "VNetPRD",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('GithubLocation'), concat('nestedtemplates/vnet.json', parameters('GithubLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "PRDNetworkName": {
+                        "value": "[parameters('PRDNetworkName')]"
+                    },
+                    "PRDNetworkAddressRange": {
+                        "value": "[parameters('PRDNetworkAddressRange')]"
+                    },
+                    "PRDsubnetName": {
+                        "value": "[parameters('PRDsubnetName')]"
+                    },
+                    "PRDsubnetRange": {
+                        "value": "[parameters('PRDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "VNetNET",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('GithubLocation'), concat('nestedtemplates/vnet.json', parameters('GithubLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "NETNetworkName": {
+                        "value": "[parameters('NETNetworkName')]"
+                    },
+                    "NETNetworkAddressRange": {
+                        "value": "[parameters('NETNetworkAddressRange')]"
+                    },
+                    "NETsubnetName": {
+                        "value": "[parameters('NETsubnetName')]"
+                    },
+                    "NETsubnetRange": {
+                        "value": "[parameters('NETsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "VNetAVD",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('GithubLocation'), concat('nestedtemplates/vnet.json', parameters('GithubLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "AVDNetworkName": {
+                        "value": "[parameters('AVDNetworkName')]"
+                    },
+                    "AVDNetworkAddressRange": {
+                        "value": "[parameters('AVDNetworkAddressRange')]"
+                    },
+                    "AVDsubnetName": {
+                        "value": "[parameters('AVDsubnetName')]"
+                    },
+                    "AVDsubnetRange": {
+                        "value": "[parameters('AVDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "VNetSig",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('GithubLocation'), concat('nestedtemplates/vnet.json', parameters('GithubLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "SIGNetworkName": {
+                        "value": "[parameters('SIGNetworkName')]"
+                    },
+                    "SIGNetworkAddressRange": {
+                        "value": "[parameters('SIGNetworkAddressRange')]"
+                    },
+                    "SIGsubnetName": {
+                        "value": "[parameters('SIGsubnetName')]"
+                    },
+                    "SIGsubnetRange": {
+                        "value": "[parameters('SIGsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-02-01",
+            "name": "[parameters('ADnetworkInterfaceName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "ADprivateIPAddress": "[parameters('ADprivateIPAddress')]",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('PRDNetworkName'), parameters('PRDsubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-02-01",
+            "name": "[parameters('SQLnetworkInterfaceName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('PRDNetworkName'), parameters('PRDsubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-02-01",
+            "name": "[parameters('APPnetworkInterfaceName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('PRDNetworkName'), parameters('PRDsubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[parameters('ADVMName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('ADnetworkInterfaceName')]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('ADVMName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[concat(parameters('ADVMName'),'_OSDisk')]",
+                        "caching": "ReadOnly",
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS"
+                        }
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('ADnetworkInterfaceName'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "apiVersion": "2019-03-01",
+                    "name": "CreateADForest",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[parameters('ADVMName')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Powershell",
+                        "type": "DSC",
+                        "typeHandlerVersion": "2.19",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('DSC/CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
+                            "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+                            "Properties": {
+                                "DomainName": "[parameters('domainName')]",
+                                "AdminCreds": {
+                                    "UserName": "[parameters('adminUsername')]",
+                                    "Password": "PrivateSettingsRef:AdminPassword"
+                                }
+                            }
+                        },
+                        "protectedSettings": {
+                            "Items": {
+                                "AdminPassword": "[parameters('adminPassword')]"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[parameters('SQLVMName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('SQLnetworkInterfaceName')]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('SQLVMName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[concat(parameters('SQLVMName'),'_OSDisk')]",
+                        "caching": "ReadOnly",
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS"
+                        }
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('SQLnetworkInterfaceName'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "apiVersion": "2019-03-01",
+                    "name": "JoinSQLADForest",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[parameters('SQLVMName')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Powershell",
+                        "type": "DSC",
+                        "typeHandlerVersion": "2.19",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('DSC/CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
+                            "ConfigurationFunction": "CreateADPDC.ps1\\DomainJoin",
+                            "Properties": {
+                                "DomainName": "[parameters('domainName')]",
+                                "AdminCreds": {
+                                    "UserName": "[parameters('adminUsername')]",
+                                    "Password": "PrivateSettingsRef:AdminPassword"
+                                }
+                            }
+                        },
+                        "protectedSettings": {
+                            "Items": {
+                                "AdminPassword": "[parameters('adminPassword')]"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[parameters('APPVMName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('APPnetworkInterfaceName')]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('APPVMName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[concat(parameters('APPVMName'),'_OSDisk')]",
+                        "caching": "ReadOnly",
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS"
+                        }
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('APPnetworkInterfaceName'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "apiVersion": "2019-03-01",
+                    "name": "JoinAPPADForest",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[parameters('APPVMName')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Powershell",
+                        "type": "DSC",
+                        "typeHandlerVersion": "2.19",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "ModulesUrl": "[uri(parameters('GithubLocation'), concat('DSC/CreateADPDC.zip', parameters('GithubLocationSasToken')))]",
+                            "ConfigurationFunction": "CreateADPDC.ps1\\DomainJoin",
+                            "Properties": {
+                                "DomainName": "[parameters('domainName')]",
+                                "AdminCreds": {
+                                    "UserName": "[parameters('adminUsername')]",
+                                    "Password": "PrivateSettingsRef:AdminPassword"
+                                }
+                            }
+                        },
+                        "protectedSettings": {
+                            "Items": {
+                                "AdminPassword": "[parameters('adminPassword')]"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "UpdateVNetDNS",
+            "dependsOn": [
+                "CreateADForest"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('GithubLocation'), concat('nestedtemplates/vnet-with-dns-server.json', parameters('GithubLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "PRDNetworkName": {
+                        "value": "[parameters('PRDNetworkName')]"
+                    },
+                    "PRDNetworkAddressRange": {
+                        "value": "[parameters('PRDNetworkAddressRange')]"
+                    },
+                    "PRDsubnetName": {
+                        "value": "[parameters('PRDsubnetName')]"
+                    },
+                    "PRDsubnetRange": {
+                        "value": "[parameters('PRDsubnetRange')]"
+                    },
+                    "DNSServerAddress": {
+                        "value": [
+                            "[parameters('ADprivateIPAddress')]"
+                        ]
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,21 +1,156 @@
 {
-    "type": "Microsoft.Compute/virtualMachines/extensions",
-    "apiVersion": "2021-04-01",
-    "name": "[concat(variables('vmName'),'/', 'InstallWebServer')]",
-    "location": "[parameters('location')]",
-    "dependsOn": [
-      "[concat('Microsoft.Compute/virtualMachines/',variables('vmName'))]"
-    ],
-    "properties": {
-      "publisher": "Microsoft.Compute",
-      "type": "CustomScriptExtension",
-      "typeHandlerVersion": "1.7",
-      "autoUpgradeMinorVersion": true,
-      "settings": {
-        "fileUris": [
-          "https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/tutorial-vm-extension/installWebServer.ps1"
-        ],
-        "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File installWebServer.ps1"
-      }
-    }
-  }
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"metadata": {
+		"_generator": {
+			"name": "bicep",
+			"version": "0.4.613.9944",
+			"templateHash": "7822315097766237434"
+		}
+	},
+	"parameters": {
+		"adminUsername": {
+			"type": "string",
+			"metadata": {
+				"description": "Username for the Virtual Machine."
+			}
+		},
+		"adminPassword": {
+			"type": "secureString",
+			"minLength": 12,
+			"metadata": {
+				"description": "Password for the Virtual Machine."
+			}
+		},
+		"location": {
+			"type": "string",
+			"defaultValue": "[resourceGroup().location]",
+			"metadata": {
+				"description": "Location for all resources."
+			}
+		},
+		"vmName": {
+			"type": "string",
+			"defaultValue": "simple-vm",
+			"metadata": {
+				"description": "Name of the virtual machine."
+			}
+		},
+		"nicName": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"virtualNetworkResourceGroup": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"CreateDnsDelegation": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"DatabasePath": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"DomainMode": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"DomainName": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"DomainNetbiosName": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"ForestMode": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"InstallDns": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"NoRebootOnCompletion": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"SafeModeAdministratorPassword": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"SysvolPath": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		},
+		"Force": {
+			"type": "string",
+			"metadata": {
+				"description": "New or Existing NSG Name"
+			}
+		}
+	},
+	"functions": [],
+	"variables": {
+		"storageAccountName": "[format('bootdiags{0}', uniqueString(resourceGroup().id))]",
+		"VMName": "[parameters ('vmName')]",
+        "CreateDnsDelegation": "[parameters ('CreateDnsDelegation')]",
+        "DatabasePath": "[parameters ('DatabasePath')]",
+        "DomainMode": "[parameters ('DomainMode')]",
+        "DomainName": "[parameters ('DomainName')]",
+        "DomainNetbiosName": "[parameters ('DomainNetbiosName')]",
+        "ForestMode": "[parameters ('ForestMode')]",
+        "InstallDns": "[parameters ('InstallDns')]",
+        "NoRebootOnCompletion": "[parameters ('NoRebootOnCompletion')]",
+        "SafeModeAdministratorPassword": "[parameters ('SafeModeAdministratorPassword')]",
+        "SysvolPath": "[parameters ('SysvolPath')]",
+        "Force": "[parameters ('Force')]"
+	},
+	"resources": [{
+		"type": "Microsoft.Compute/virtualMachines/extensions",
+		"apiVersion": "2021-04-01",
+		"name": "[concat(variables('vmName'),'/', 'azConfigADDS')]",
+		"location": "[parameters('location')]",
+		"dependsOn": [
+			"[concat('Microsoft.Compute/virtualMachines/',variables('vmName'))]"
+		],
+		"properties": {
+			"publisher": "Microsoft.Compute",
+			"type": "CustomScriptExtension",
+			"typeHandlerVersion": "1.7",
+			"autoUpgradeMinorVersion": true,
+			"settings": {
+				"fileUris": [
+					"https://github.com/AadSchimmel/AzDefault/blob/master/azConfigADDS.ps1"
+				],
+				"commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File azConfigADDS.ps1 -CreateDnsDelegation $false -volgende [parameters ('DomainName')] "
+			}
+		}
+	}
+]
+}

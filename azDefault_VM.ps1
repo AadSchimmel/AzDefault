@@ -33,7 +33,7 @@ foreach ($RG in $ResourceGroups) {
    Write-Host "Checking for Resource Group: $($RG)" -ForegroundColor Yellow
    if (!(Get-AzResourceGroup -Name $RG -ErrorAction SilentlyContinue)){ 
        Write-Host "Creating new Resource Group: $($RG)" -ForegroundColor Green
-       New-AzResourceGroup -Name $RG -Location $Location 
+       #New-AzResourceGroup -Name $RG -Location $Location 
    } else { 
        Write-Host "Resource Group $($RG) already exists, continuing..." -ForegroundColor Yellow
    }
@@ -64,14 +64,14 @@ foreach ($RG in $ResourceGroups) {
     }
 
    $Parameters = @{
-    'Name'                      = 'LimeDefaultDeployment' + (Get-Random)
+    'Name'                      = 'LimeDefaultDeployment-' + (Get-Random)
     'ResourceGroupName'         = $RG
     'TemplateFile'              = '.\azVirtualMachine.json'
     'TemplateParameterObject'   = $ParamObject
     'Verbose'                   = $true
     }
-    New-AzResourceGroupDeployment @parameters
-    }   
+    New-AzResourceGroupDeployment @Parameters
+    } 
    } else {
       $vNETCheck = Get-AzVirtualNetwork -ResourceGroupName $RG -ResourceName  $vNETName -ErrorAction SilentlyContinue
       if (!$vNETCheck){
@@ -88,3 +88,5 @@ foreach ($RG in $ResourceGroups) {
 } 
 
 Stop-Transcript
+
+
