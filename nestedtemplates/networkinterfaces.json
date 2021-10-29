@@ -52,8 +52,6 @@
                     {
                         "name": "ipconfig1",
                         "properties": {
-                            "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
-                            "privateIPAddress": "[parameters('privateAddressStatic')]",
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
                             }

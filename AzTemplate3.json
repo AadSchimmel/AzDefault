@@ -265,12 +265,6 @@
                     "interfaceName": {
                         "value": "[variables('ADnicName')]"
                     },
-                    "privateIPAddressStatic": {
-                        "value": "[variables('ADprivateIPAddress')]"
-                    },
-                    "privateIPAllocationMethod": {
-                        "value": "[variables('privateIPAllocationMethod')]"
-                    },
                     "subnetName": {
                         "value": "[variables('PRDsubnetName')]"
                     },
