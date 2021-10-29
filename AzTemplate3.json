@@ -262,6 +262,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "NetworkName": {
+                        "value": "[variables('PRDNetworkName')]"
+                    },
                     "interfaceName": {
                         "value": "[variables('ADnicName')]"
                     },
@@ -289,6 +292,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "NetworkName": {
+                        "value": "[variables('PRDNetworkName')]"
+                    },
                     "interfaceName": {
                         "value": "[variables('SQLnicName')]"
                     },
@@ -316,6 +322,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "NetworkName": {
+                        "value": "[variables('PRDNetworkName')]"
+                    },
                     "interfaceName": {
                         "value": "[variables('APPnicName')]"
                     },
