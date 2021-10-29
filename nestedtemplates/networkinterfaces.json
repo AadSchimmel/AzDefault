@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "interfaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Virtual Network to Create"
+            }
+        },
+        "privateAddressStatic": {
+            "type": "string",
+            "metadata": {
+                "description": "The address range of the new VNET in CIDR format"
+            }
+        },
+        "subnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the subnet created in the new VNET"
+            }
+        },
+        "networkName": {
+            "type": "string",
+            "metadata": {
+                "description": "The address range of the subnet created in the new VNET"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "privateIPAllocationMethod": {
+            "type": "string",
+            "defaultValue": "Dynamic",
+            "metadata": {
+                "description": "Default private IP allocation."
+            }
+        },
+        "privateIPAddress": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Default private IP allocation."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('interfaceName')]",
+            "apiVersion": "[providers('Microsoft.Network','networkInterfaces').apiVersions[0]]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
+                            "privateIPAddress": "[parameters('privateAddressStatic')]",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

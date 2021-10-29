@@ -1,0 +1,356 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the administrator account of the new VM and domain"
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The password for the administrator account of the new VM and domain"
+            }
+        },
+        "domainName": {
+            "type": "string",
+            "defaultValue": "example.local",
+            "metadata": {
+                "description": "The domain name."
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_B2ms",
+            "metadata": {
+                "description": "Size of the VM for the controller"
+            }
+        },
+        "CustomerName": {
+            "type": "string",
+            "defaultValue": "CustomerName",
+            "metadata": {
+                "description": "Customer name for resource group."
+            }
+        },
+        "ADVMName": {
+            "type": "string",
+            "defaultValue": "AD01",
+            "metadata": {
+                "description": "Virtual machine name."
+            }
+        },
+        "SQLVMName": {
+            "type": "string",
+            "defaultValue": "SQL01",
+            "metadata": {
+                "description": "Virtual machine name."
+            }
+        },
+        "APPVMName": {
+            "type": "string",
+            "defaultValue": "APP01",
+            "metadata": {
+                "description": "Virtual machine name."
+            }
+        }
+    },
+    "variables": {
+        "GithubLocation": "https://github.com/AadSchimmel/AzDefault/blob/master/",
+        "Location": "westeurope",
+        "PRDNetworkAddressRange": "10.0.0.0/16",
+        "NETNetworkAddressRange": "10.1.0.0/16",
+        "AVDNetworkAddressRange": "10.2.0.0/16",
+        "SIGNetworkAddressRange": "10.3.0.0/16",
+        "PRDsubnetRange": "10.0.0.0/24",
+        "NETsubnetRange": "10.1.0.0/24",
+        "AVDsubnetRange": "10.2.0.0/24",
+        "SIGsubnetRange": "10.3.0.0/24",
+        "ADprivateIPAddress": "10.0.0.4",
+        "SQLnicName": "[concat(parameters('SQLVMName'), '-nic')]",
+        "ADnicName": "[concat(parameters('ADVMName'), '-nic')]",
+        "APPnicName": "[concat(parameters('APPVMName'), '-nic')]",
+        "PRDsubnetName": "prdSubnet",
+        "SIGsubnetName": "sigSubnet",
+        "AVDsubnetName": "avdSubnet",
+        "NETsubnetName": "netSubnet",
+        "PRDNetworkName": "prdVNET",
+        "NETNetworkName": "netVNET",
+        "AVDNetworkName": "avdVNET",
+        "SIGNetworkName": "sigVNET",
+        "PRDRGName": "[concat('RG-PRD-', parameters('CustomerName'))]",
+        "NETRGName": "[concat('RG-NET-', parameters('CustomerName'))]",
+        "AVDRGName": "[concat('RG-AVD-', parameters('CustomerName'))]",
+        "SIGRGName": "[concat('RG-SIG-', parameters('CustomerName'))]",
+        "privateIPAllocationMethod": "Static"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('Location')]",
+            "name": "[variables('PRDRGName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('Location')]",
+            "name": "[variables('NETRGName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('Location')]",
+            "name": "[variables('AVDRGName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('Location')]",
+            "name": "[variables('SIGRGName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
+            ],
+            "name": "VNetPRD",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "VirtualNetworkName": {
+                        "value": "[variables('PRDNetworkName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('PRDNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('PRDsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('PRDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('Location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "resourceGroup": "[variables('NETRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('NETRGName'))]"
+            ],
+            "name": "VNetNET",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "VirtualNetworkName": {
+                        "value": "[variables('NETNetworkName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('NETNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('NETsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('NETsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('Location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "resourceGroup": "[variables('AVDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('AVDRGName'))]"
+            ],
+            "name": "VNetAVD",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "VirtualNetworkName": {
+                        "value": "[variables('AVDNetworkName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('AVDNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('AVDsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('AVDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('Location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "resourceGroup": "[variables('SIGRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('SIGRGName'))]"
+            ],
+            "name": "VNetSIG",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "VirtualNetworkName": {
+                        "value": "[variables('SIGNetworkName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('SIGNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('SIGsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('SIGsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('Location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[providers('Microsoft.Network','networkInterfaces').apiVersions[0]]",
+            "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
+            ],
+            "name": "[variables('ADnicName')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "interfaceName": {
+                        "value": "[variables('ADnicName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('PRDNetworkAddressRange')]"
+                    },
+                    "privateIPAddressStatic": {
+                        "value": "[variables('ADprivateIPAddress')]"
+                    },
+                    "privateIPAllocationMethod": {
+                        "value": "[variables('privateIPAllocationMethod')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('PRDsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('PRDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('Location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[providers('Microsoft.Network','networkInterfaces').apiVersions[0]]",
+            "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
+            ],
+            "name": "[variables('SQLnicName')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "interfaceName": {
+                        "value": "[variables('SQLnicName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('PRDNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('PRDsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('PRDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('Location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[providers('Microsoft.Network','networkInterfaces').apiVersions[0]]",
+            "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
+            ],
+            "name": "[variables('APPnicName')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "interfaceName": {
+                        "value": "[variables('APPnicName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('PRDNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('PRDsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('PRDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('Location')]"
+                    }
+                }
+            }
+        }
+    ]
+}
