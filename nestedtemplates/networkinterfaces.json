@@ -10,8 +10,9 @@
         },
         "privateAddressStatic": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
-                "description": "The address range of the new VNET in CIDR format"
+                "description": "Default private IP-address."
             }
         },
         "subnetName": {
