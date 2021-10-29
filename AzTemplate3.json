@@ -249,7 +249,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "[providers('Microsoft.Network','networkInterfaces').apiVersions[0]]",
+            "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
@@ -265,9 +265,6 @@
                     "interfaceName": {
                         "value": "[variables('ADnicName')]"
                     },
-                    "VirtualNetworkAddressRange": {
-                        "value": "[variables('PRDNetworkAddressRange')]"
-                    },
                     "privateIPAddressStatic": {
                         "value": "[variables('ADprivateIPAddress')]"
                     },
@@ -277,9 +274,6 @@
                     "subnetName": {
                         "value": "[variables('PRDsubnetName')]"
                     },
-                    "subnetRange": {
-                        "value": "[variables('PRDsubnetRange')]"
-                    },
                     "location": {
                         "value": "[variables('Location')]"
                     }
@@ -288,7 +282,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "[providers('Microsoft.Network','networkInterfaces').apiVersions[0]]",
+            "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
@@ -304,14 +298,8 @@
                     "interfaceName": {
                         "value": "[variables('SQLnicName')]"
                     },
-                    "VirtualNetworkAddressRange": {
-                        "value": "[variables('PRDNetworkAddressRange')]"
-                    },
                     "subnetName": {
                         "value": "[variables('PRDsubnetName')]"
-                    },
-                    "subnetRange": {
-                        "value": "[variables('PRDsubnetRange')]"
                     },
                     "location": {
                         "value": "[variables('Location')]"
@@ -321,7 +309,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "[providers('Microsoft.Network','networkInterfaces').apiVersions[0]]",
+            "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
@@ -337,14 +325,8 @@
                     "interfaceName": {
                         "value": "[variables('APPnicName')]"
                     },
-                    "VirtualNetworkAddressRange": {
-                        "value": "[variables('PRDNetworkAddressRange')]"
-                    },
                     "subnetName": {
                         "value": "[variables('PRDsubnetName')]"
-                    },
-                    "subnetRange": {
-                        "value": "[variables('PRDsubnetRange')]"
                     },
                     "location": {
                         "value": "[variables('Location')]"
