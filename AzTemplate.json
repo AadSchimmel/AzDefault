@@ -55,11 +55,18 @@
             "metadata": {
                 "description": "Virtual machine name."
             }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "westeurope",
+            "metadata": {
+                "description": "Virtual machine name."
+            }
         }
     },
     "variables": {
-        "GithubLocation": "https://github.com/AadSchimmel/AzDefault/blob/master/",
-        "Location": "westeurope",
+        "Githublocation": "https://github.com/AadSchimmel/AzDefault/blob/master/",
+        "location": "[parameters('location')]",
         "PRDNetworkAddressRange": "10.0.0.0/16",
         "NETNetworkAddressRange": "10.1.0.0/16",
         "AVDNetworkAddressRange": "10.2.0.0/16",
@@ -89,28 +96,28 @@
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('Location')]",
+            "location": "[variables('location')]",
             "name": "[variables('PRDRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('Location')]",
+            "location": "[variables('location')]",
             "name": "[variables('NETRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('Location')]",
+            "location": "[variables('location')]",
             "name": "[variables('AVDRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('Location')]",
+            "location": "[variables('location')]",
             "name": "[variables('SIGRGName')]",
             "properties": {}
         },
@@ -125,7 +132,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -142,7 +149,7 @@
                         "value": "[variables('PRDsubnetRange')]"
                     },
                     "location": {
-                        "value": "[variables('Location')]"
+                        "value": "[variables('location')]"
                     }
                 }
             }
@@ -158,7 +165,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -175,7 +182,7 @@
                         "value": "[variables('NETsubnetRange')]"
                     },
                     "location": {
-                        "value": "[variables('Location')]"
+                        "value": "[variables('location')]"
                     }
                 }
             }
@@ -191,7 +198,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -208,7 +215,7 @@
                         "value": "[variables('AVDsubnetRange')]"
                     },
                     "location": {
-                        "value": "[variables('Location')]"
+                        "value": "[variables('location')]"
                     }
                 }
             }
@@ -224,7 +231,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/vnet.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -241,7 +248,7 @@
                         "value": "[variables('SIGsubnetRange')]"
                     },
                     "location": {
-                        "value": "[variables('Location')]"
+                        "value": "[variables('location')]"
                     }
                 }
             }
@@ -258,7 +265,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -272,7 +279,7 @@
                         "value": "[variables('PRDsubnetName')]"
                     },
                     "location": {
-                        "value": "[variables('Location')]"
+                        "value": "[variables('location')]"
                     }
                 }
             }
@@ -289,7 +296,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -303,7 +310,7 @@
                         "value": "[variables('PRDsubnetName')]"
                     },
                     "location": {
-                        "value": "[variables('Location')]"
+                        "value": "[variables('location')]"
                     }
                 }
             }
@@ -320,7 +327,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('GithubLocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -334,7 +341,7 @@
                         "value": "[variables('PRDsubnetName')]"
                     },
                     "location": {
-                        "value": "[variables('Location')]"
+                        "value": "[variables('location')]"
                     }
                 }
             }
