@@ -25,48 +25,41 @@
             "type": "string",
             "defaultValue": "Standard_B2ms",
             "metadata": {
-                "description": "Size of the VM for the controller"
+                "description": "Default size of the VM's."
             }
         },
         "CustomerName": {
             "type": "string",
             "defaultValue": "CustomerName",
             "metadata": {
-                "description": "Customer name for resource group."
+                "description": "Customer name."
             }
         },
         "ADVMName": {
             "type": "string",
             "defaultValue": "AD01",
             "metadata": {
-                "description": "Virtual machine name."
+                "description": "AD Virtual machine name."
             }
         },
         "SQLVMName": {
             "type": "string",
             "defaultValue": "SQL01",
             "metadata": {
-                "description": "Virtual machine name."
+                "description": "SQL Virtual machine name."
             }
         },
         "APPVMName": {
             "type": "string",
             "defaultValue": "APP01",
             "metadata": {
-                "description": "Virtual machine name."
-            }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "westeurope",
-            "metadata": {
-                "description": "Virtual machine name."
+                "description": "APP Virtual machine name."
             }
         }
     },
     "variables": {
         "Githublocation": "https://github.com/AadSchimmel/AzDefault/blob/master/",
-        "location": "[parameters('location')]",
+        "location": "westeurope",
         "PRDNetworkAddressRange": "10.0.0.0/16",
         "NETNetworkAddressRange": "10.1.0.0/16",
         "AVDNetworkAddressRange": "10.2.0.0/16",

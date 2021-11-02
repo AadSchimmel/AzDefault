@@ -18,28 +18,26 @@
         "domainName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the subnet created in the new VNET"
+                "description": "The domain name for the Active Directory."
             }
         },
         "vmSize": {
             "type": "string",
             "defaultValue": "Standard_B2ms",
             "metadata": {
-                "description": "The address range of the subnet created in the new VNET"
+                "description": "The size of the VM, default B2ms."
             }
         },
         "VMName": {
             "type": "string",
-            "defaultValue": "Standard_B2ms",
             "metadata": {
-                "description": "The address range of the subnet created in the new VNET"
+                "description": "The VM name."
             }
         },
         "nicName": {
             "type": "string",
-            "defaultValue": "Standard_B2ms",
             "metadata": {
-                "description": "The address range of the subnet created in the new VNET"
+                "description": "The name of the network interface."
             }
         },        
         "location": {
