@@ -261,7 +261,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "NetworkName": {
+                    "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
                     "interfaceName": {
@@ -291,7 +291,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "NetworkName": {
+                    "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
                     "interfaceName": {
@@ -321,7 +321,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "NetworkName": {
+                    "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
                     "interfaceName": {
