@@ -251,8 +251,7 @@
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDNetworkName'), variables('PRDsubnetName'))]"
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
             ],
             "name": "[variables('ADnicName')]",
             "properties": {
@@ -282,8 +281,7 @@
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDNetworkName'), variables('PRDsubnetName'))]"
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
             ],
             "name": "[variables('SQLnicName')]",
             "properties": {
@@ -313,8 +311,7 @@
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDNetworkName'), variables('PRDsubnetName'))]"
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
             ],
             "name": "[variables('APPnicName')]",
             "properties": {
@@ -345,7 +342,6 @@
             "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDNetworkName'), variables('PRDsubnetName'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('ADnicName'))]"
             ],
             "name": "[parameters('ADVMname')]",
