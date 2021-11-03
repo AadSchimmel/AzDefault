@@ -338,6 +338,47 @@
                     }
                 }
             }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDNetworkName'), variables('PRDsubnetName'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('ADnicName'))]"
+            ],
+            "name": "[parameters('ADVMname')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/virtualmachines.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    },
+                    "VMName": {
+                        "value": "[parameters('ADVMName')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "nicName": {
+                        "value": "[variables('ADnicName')]"
+                    }
+                }
+            }
         }
     ]
 }
