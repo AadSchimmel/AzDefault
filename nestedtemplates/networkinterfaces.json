@@ -34,6 +34,9 @@
             }
         }
     },
+    "variables":{
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
+    },
     "resources": [
         {
             "type": "Microsoft.Network/networkInterfaces",
@@ -47,7 +50,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
+                                "id": "[variables('subnetRef')]"
                             }
                         }
                     }
