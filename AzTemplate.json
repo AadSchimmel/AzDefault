@@ -264,7 +264,7 @@
                     "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
-                    "interfaceName": {
+                    "nicName": {
                         "value": "[variables('ADnicName')]"
                     },
                     "subnetName": {
@@ -294,7 +294,7 @@
                     "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
-                    "interfaceName": {
+                    "nicName": {
                         "value": "[variables('SQLnicName')]"
                     },
                     "subnetName": {
@@ -324,7 +324,7 @@
                     "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
-                    "interfaceName": {
+                    "nicName": {
                         "value": "[variables('APPnicName')]"
                     },
                     "subnetName": {

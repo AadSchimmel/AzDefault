@@ -2,17 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "interfaceName": {
+        "nicName": {
             "type": "string",
             "metadata": {
                 "description": "The name of the Virtual Network to Create"
-            }
-        },
-        "privateAddressStatic": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Default private IP-address."
             }
         },
         "subnetName": {
@@ -32,24 +25,14 @@
             "metadata": {
                 "description": "Location for all resources."
             }
-        },
-        "privateIPAllocationMethod": {
-            "type": "string",
-            "defaultValue": "Dynamic",
-            "metadata": {
-                "description": "Default private IP allocation."
-            }
         }
     },
     "resources": [
         {
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[parameters('interfaceName')]",
             "apiVersion": "2020-08-01",
+            "name": "[parameters('nicName')]",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('networkName'))]"
-            ],
             "properties": {
                 "ipConfigurations": [
                     {
