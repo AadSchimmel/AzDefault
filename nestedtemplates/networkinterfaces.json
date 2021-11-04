@@ -20,6 +20,13 @@
                 "description": "The address range of the subnet created in the new VNET"
             }
         },
+        "privateIPAllocationMethod": {
+            "type": "string",
+            "defaultValue": "Dynamic",
+            "metadata": {
+                "description": "The address range of the subnet created in the new VNET"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -38,6 +45,7 @@
                     {
                         "name": "ipconfig1",
                         "properties": {
+                            "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
                             }

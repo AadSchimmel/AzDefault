@@ -250,9 +250,6 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
-            ],
             "name": "[variables('ADnicName')]",
             "properties": {
                 "mode": "Incremental",
@@ -280,9 +277,6 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
-            ],
             "name": "[variables('SQLnicName')]",
             "properties": {
                 "mode": "Incremental",
@@ -310,9 +304,6 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
-            ],
             "name": "[variables('APPnicName')]",
             "properties": {
                 "mode": "Incremental",
