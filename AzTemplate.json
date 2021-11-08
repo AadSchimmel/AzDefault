@@ -71,8 +71,8 @@
         "ADprivateIPAddress": "10.0.0.4",
         "SQLprivateIPAddress": "10.0.0.5",
         "APPprivateIPAddress": "10.0.0.6",
-        "SQLnicName": "[concat(parameters('SQLVMName'), '-nic')]",
         "ADnicName": "[concat(parameters('ADVMName'), '-nic')]",
+        "SQLnicName": "[concat(parameters('SQLVMName'), '-nic')]",
         "APPnicName": "[concat(parameters('APPVMName'), '-nic')]",
         "PRDsubnetName": "prdSubnet",
         "SIGsubnetName": "sigSubnet",
@@ -253,9 +253,6 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
-            "dependsOn": [
-                "[variables('subnetRef')]"
-            ],
             "name": "[variables('ADnicName')]",
             "properties": {
                 "mode": "Incremental",
@@ -289,9 +286,6 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
-            "dependsOn": [
-                "[variables('subnetRef')]"
-            ],
             "name": "[variables('SQLnicName')]",
             "properties": {
                 "mode": "Incremental",
@@ -325,9 +319,6 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
-            "dependsOn": [
-                "[variables('subnetRef')]"
-            ],
             "name": "[variables('APPnicName')]",
             "properties": {
                 "mode": "Incremental",

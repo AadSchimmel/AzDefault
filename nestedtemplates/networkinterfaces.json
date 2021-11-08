@@ -36,7 +36,7 @@
         "subnetRef": {
             "type": "string",
             "metadata": {
-                "description": "The address range of the subnet created in the new VNET"
+                "description": "subnet reference"
             }
         },
         "location": {
@@ -48,20 +48,16 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2020-08-01",
             "name": "[parameters('nicName')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('networkName'))]"
-            ],
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-11-01",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "ipConfigurations": [
                     {
-                        "name": "ipconfig1",
+                        "name": "ipConfig1",
                         "properties": {
                             "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
-                            "privateIPAddress": "[parameters('PrivateIPadddress')]",
                             "subnet": {
                                 "id": "[parameters('subnetRef')]"
                             }
