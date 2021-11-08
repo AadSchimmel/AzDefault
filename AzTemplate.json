@@ -69,6 +69,8 @@
         "AVDsubnetRange": "10.2.0.0/24",
         "SIGsubnetRange": "10.3.0.0/24",
         "ADprivateIPAddress": "10.0.0.4",
+        "SQLprivateIPAddress": "10.0.0.5",
+        "APPprivateIPAddress": "10.0.0.6",
         "SQLnicName": "[concat(parameters('SQLVMName'), '-nic')]",
         "ADnicName": "[concat(parameters('ADVMName'), '-nic')]",
         "APPnicName": "[concat(parameters('APPVMName'), '-nic')]",
@@ -271,6 +273,9 @@
                     "nicName": {
                         "value": "[variables('ADnicName')]"
                     },
+                    "PrivateIPadddress": {
+                        "value": "[variables('ADprivateIPAddress')]"
+                    },
                     "subnetName": {
                         "value": "[variables('PRDsubnetName')]"
                     },
@@ -284,6 +289,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[variables('subnetRef')]"
+            ],
             "name": "[variables('SQLnicName')]",
             "properties": {
                 "mode": "Incremental",
@@ -295,8 +303,14 @@
                     "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
                     "nicName": {
                         "value": "[variables('SQLnicName')]"
+                    },
+                    "PrivateIPadddress": {
+                        "value": "[variables('SQLprivateIPAddress')]"
                     },
                     "subnetName": {
                         "value": "[variables('PRDsubnetName')]"
@@ -311,6 +325,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[variables('subnetRef')]"
+            ],
             "name": "[variables('APPnicName')]",
             "properties": {
                 "mode": "Incremental",
@@ -322,8 +339,14 @@
                     "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
                     "nicName": {
                         "value": "[variables('APPnicName')]"
+                    },
+                    "PrivateIPadddress": {
+                        "value": "[variables('APPprivateIPAddress')]"
                     },
                     "subnetName": {
                         "value": "[variables('PRDsubnetName')]"
