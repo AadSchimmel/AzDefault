@@ -27,6 +27,12 @@
                 "description": "The address range of the subnet created in the new VNET"
             }
         },
+        "subnetRef": {
+            "type": "string",
+            "metadata": {
+                "description": "The address range of the subnet created in the new VNET"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -34,8 +40,8 @@
             }
         }
     },
-    "variables":{
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
+    "variables": {
+        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
     },
     "resources": [
         {

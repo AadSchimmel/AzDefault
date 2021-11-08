@@ -83,7 +83,8 @@
         "PRDRGName": "[concat('RG-PRD-', parameters('CustomerName'))]",
         "NETRGName": "[concat('RG-NET-', parameters('CustomerName'))]",
         "AVDRGName": "[concat('RG-AVD-', parameters('CustomerName'))]",
-        "SIGRGName": "[concat('RG-SIG-', parameters('CustomerName'))]"
+        "SIGRGName": "[concat('RG-SIG-', parameters('CustomerName'))]",
+        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDnetworkName'), variables('PRDsubnetName'))]"
     },
     "resources": [
         {
@@ -250,6 +251,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[variables('subnetRef')]"
+            ],
             "name": "[variables('ADnicName')]",
             "properties": {
                 "mode": "Incremental",
