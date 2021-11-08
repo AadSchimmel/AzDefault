@@ -22,7 +22,7 @@
         },
         "privateIPAllocationMethod": {
             "type": "string",
-            "defaultValue": "Dynamic",
+            "defaultValue": "Static",
             "metadata": {
                 "description": "The address range of the subnet created in the new VNET"
             }
@@ -38,12 +38,6 @@
             "metadata": {
                 "description": "subnet reference"
             }
-        },
-        "location": {
-            "type": "string",
-            "metadata": {
-                "description": "Location for all resources."
-            }
         }
     },
     "resources": [
@@ -58,6 +52,7 @@
                         "name": "ipConfig1",
                         "properties": {
                             "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
+                            "privateIPAddress": "[parameters('PrivateIPadddress')]",
                             "subnet": {
                                 "id": "[parameters('subnetRef')]"
                             }
