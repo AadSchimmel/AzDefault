@@ -265,6 +265,9 @@
                     "networkName": {
                         "value": "[variables('PRDNetworkName')]"
                     },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
                     "nicName": {
                         "value": "[variables('ADnicName')]"
                     },
