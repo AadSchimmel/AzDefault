@@ -4,6 +4,7 @@
     "parameters": {
         "nicName": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
                 "description": "The name of the Virtual Network to Create"
             }
@@ -38,41 +39,34 @@
             "metadata": {
                 "description": "subnet reference"
             }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
         }
     },
     "resources": [
         {
-            "apiVersion": "2018-05-01",
+            "type": "Microsoft.Network/networkInterfaces",
             "name": "[parameters('nicName')]",
-            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-11-01",
+            "location": "[parameters('location')]",
             "properties": {
-                "mode": "Incremental"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
-            ],
-            "resources": [
-                {
-                    "name": "[parameters('nicName')]",
-                    "type": "Microsoft.Network/networkInterfaces",
-                    "apiVersion": "2019-11-01",
-                    "location": "[resourceGroup().location]",
-                    "properties": {
-                        "ipConfigurations": [
-                            {
-                                "name": "ipConfig1",
-                                "properties": {
-                                    "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
-                                    "privateIPAddress": "[parameters('PrivateIPadddress')]",
-                                    "subnet": {
-                                        "id": "[parameters('subnetRef')]"
-                                    }
-                                }
+                "ipConfigurations": [
+                    {
+                        "name": "ipConfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
+                            "privateIPAddress": "[parameters('PrivateIPadddress')]",
+                            "subnet": {
+                                "id": "[parameters('subnetRef')]"
                             }
-                        ]
+                        }
                     }
-                }
-            ]
+                ]
+            }
         }
     ]
 }
