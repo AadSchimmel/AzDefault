@@ -58,7 +58,7 @@
         }
     },
     "variables": {
-        "Githublocation": "https://github.com/AadSchimmel/AzDefault/blob/master/",
+        "Githublocation": "https://raw.githubusercontent.com/AadSchimmel/AzDefault/master/",
         "location": "westeurope",
         "PRDNetworkAddressRange": "10.0.0.0/16",
         "NETNetworkAddressRange": "10.1.0.0/16",
