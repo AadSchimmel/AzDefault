@@ -53,6 +53,7 @@
             ],
             "resources": [
                 {
+                    "name": "[parameters('nicName')]",
                     "type": "Microsoft.Network/networkInterfaces",
                     "apiVersion": "2019-11-01",
                     "location": "[resourceGroup().location]",
