@@ -45,6 +45,7 @@
             "apiVersion": "2018-05-01",
             "name": "deployment1",
             "type": "Microsoft.Resources/deployments",
+            "properties": {},
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('networkName'), parameters('subnetName'))]"
             ],
