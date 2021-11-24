@@ -86,7 +86,7 @@
         "NETRGName": "[concat('RG-NET-', parameters('CustomerName'))]",
         "AVDRGName": "[concat('RG-AVD-', parameters('CustomerName'))]",
         "SIGRGName": "[concat('RG-SIG-', parameters('CustomerName'))]",
-        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDnetworkName'), variables('PRDsubnetName'))]"
+        "subnetRef": "[resourceId(variables('PRDRGName'), 'Microsoft.Network/virtualNetworks/subnets', variables('PRDnetworkName'), variables('PRDsubnetName'))]"
     },
     "resources": [
         {
@@ -256,7 +256,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
             ],
-            "name": "DeployAD01",
+            "name": "Deploy_AD01",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -283,13 +283,103 @@
                         "value": "[parameters('vmSize')]"
                     },
                     "PrivateIPadddress": {
-                        "value": "[variables('APPprivateIPAddress')]"
+                        "value": "[variables('ADprivateIPAddress')]"
                     },
                     "subnetRef": {
                         "value": "[variables('subnetRef')]"
                     },
                     "nicName": {
                         "value": "[variables('ADnicName')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
+            ],
+            "name": "Deploy_APP01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/virtualmachines.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    },
+                    "VMName": {
+                        "value": "[parameters('APPVMName')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "PrivateIPadddress": {
+                        "value": "[variables('APPprivateIPAddress')]"
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "nicName": {
+                        "value": "[variables('APPnicName')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "resourceGroup": "[variables('PRDRGName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
+            ],
+            "name": "Deploy_SQL01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/virtualmachines.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    },
+                    "VMName": {
+                        "value": "[parameters('SQLVMName')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "PrivateIPadddress": {
+                        "value": "[variables('SQLprivateIPAddress')]"
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "nicName": {
+                        "value": "[variables('SQLnicName')]"
                     }
                 }
             }
