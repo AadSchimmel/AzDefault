@@ -39,7 +39,26 @@
             "metadata": {
                 "description": "The name of the network interface."
             }
-        },        
+        },
+        "privateIPAllocationMethod": {
+            "type": "string",
+            "defaultValue": "Static",
+            "metadata": {
+                "description": "The address range of the subnet created in the new VNET"
+            }
+        },
+        "PrivateIPadddress": {
+            "type": "string",
+            "metadata": {
+                "description": "The address range of the subnet created in the new VNET"
+            }
+        },
+        "subnetRef": {
+            "type": "string",
+            "metadata": {
+                "description": "subnet reference"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -48,6 +67,26 @@
         }
     },
     "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('nicName')]",
+            "apiVersion": "2020-11-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipConfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "[parameters('privateIPAllocationMethod')]",
+                            "privateIPAddress": "[parameters('PrivateIPadddress')]",
+                            "subnet": {
+                                "id": "[parameters('subnetRef')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
@@ -88,9 +127,8 @@
                         }
                     ]
                 }
-           
+
             }
         }
     ]
 }
-    

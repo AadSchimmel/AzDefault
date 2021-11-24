@@ -253,110 +253,10 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "resourceGroup": "[variables('PRDRGName')]",
-            "name": "[variables('ADnicName')]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "networkName": {
-                        "value": "[variables('PRDNetworkName')]"
-                    },
-                    "subnetRef": {
-                        "value": "[variables('subnetRef')]"
-                    },
-                    "nicName": {
-                        "value": "[variables('ADnicName')]"
-                    },
-                    "PrivateIPadddress": {
-                        "value": "[variables('ADprivateIPAddress')]"
-                    },
-                    "subnetName": {
-                        "value": "[variables('PRDsubnetName')]"
-                    },
-                    "location": {
-                        "value": "[variables('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2018-05-01",
-            "resourceGroup": "[variables('PRDRGName')]",
-            "name": "[variables('SQLnicName')]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "networkName": {
-                        "value": "[variables('PRDNetworkName')]"
-                    },
-                    "subnetRef": {
-                        "value": "[variables('subnetRef')]"
-                    },
-                    "nicName": {
-                        "value": "[variables('SQLnicName')]"
-                    },
-                    "PrivateIPadddress": {
-                        "value": "[variables('SQLprivateIPAddress')]"
-                    },
-                    "subnetName": {
-                        "value": "[variables('PRDsubnetName')]"
-                    },
-                    "location": {
-                        "value": "[variables('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2018-05-01",
-            "resourceGroup": "[variables('PRDRGName')]",
-            "name": "[variables('APPnicName')]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/networkinterfaces.json?raw=true'))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "networkName": {
-                        "value": "[variables('PRDNetworkName')]"
-                    },
-                    "subnetRef": {
-                        "value": "[variables('subnetRef')]"
-                    },
-                    "nicName": {
-                        "value": "[variables('APPnicName')]"
-                    },
-                    "PrivateIPadddress": {
-                        "value": "[variables('APPprivateIPAddress')]"
-                    },
-                    "subnetName": {
-                        "value": "[variables('PRDsubnetName')]"
-                    },
-                    "location": {
-                        "value": "[variables('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2018-05-01",
-            "resourceGroup": "[variables('PRDRGName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('ADnicName'))]"
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('PRDRGName'))]"
             ],
-            "name": "[parameters('ADVMname')]",
+            "name": "DeployAD01",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -381,6 +281,12 @@
                     },
                     "vmSize": {
                         "value": "[parameters('vmSize')]"
+                    },
+                    "PrivateIPadddress": {
+                        "value": "[variables('APPprivateIPAddress')]"
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
                     },
                     "nicName": {
                         "value": "[variables('ADnicName')]"
