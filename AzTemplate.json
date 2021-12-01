@@ -86,7 +86,7 @@
         "NETRGName": "[concat('RG-NET-', parameters('CustomerName'))]",
         "AVDRGName": "[concat('RG-AVD-', parameters('CustomerName'))]",
         "SIGRGName": "[concat('RG-SIG-', parameters('CustomerName'))]",
-        "subnetRef": "[resourceId(variables('PRDRGName'), 'Microsoft.Network/virtualNetworks/subnets', variables('PRDnetworkName'), variables('PRDsubnetName'))]"
+        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('PRDnetworkName'), variables('PRDsubnetName'))]"
     },
     "resources": [
         {
@@ -94,28 +94,30 @@
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
             "name": "[variables('PRDRGName')]",
-            "properties": {}
-        },
-        {
-            "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
-            "location": "[variables('location')]",
-            "name": "[variables('NETRGName')]",
-            "properties": {}
-        },
-        {
-            "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
-            "location": "[variables('location')]",
-            "name": "[variables('AVDRGName')]",
-            "properties": {}
-        },
-        {
-            "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
-            "location": "[variables('location')]",
-            "name": "[variables('SIGRGName')]",
-            "properties": {}
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/resourceGroups.json?raw=true'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "VirtualNetworkName": {
+                        "value": "[variables('PRDNetworkName')]"
+                    },
+                    "VirtualNetworkAddressRange": {
+                        "value": "[variables('PRDNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('PRDsubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('PRDsubnetRange')]"
+                    },
+                    "location": {
+                        "value": "[variables('location')]"
+                    }
+                }
+            }
         },
         {
             "type": "Microsoft.Resources/deployments",
@@ -262,6 +264,9 @@
                 "templateLink": {
                     "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/virtualmachines.json?raw=true'))]",
                     "contentVersion": "1.0.0.0"
+                },
+                "debugSetting": {
+                    "detailLevel": "requestContent, responseContent"
                 },
                 "parameters": {
                     "adminUsername": {

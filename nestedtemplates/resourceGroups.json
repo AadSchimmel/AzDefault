@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "CustomerName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Virtual Network to Create"
+            }
+        }
+    },
+    "variables": {
+        "location": "westeurope",
+        "PRDRGName": "[concat('RG-PRD-', parameters('CustomerName'))]",
+        "NETRGName": "[concat('RG-NET-', parameters('CustomerName'))]",
+        "AVDRGName": "[concat('RG-AVD-', parameters('CustomerName'))]",
+        "SIGRGName": "[concat('RG-SIG-', parameters('CustomerName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('location')]",
+            "name": "[variables('PRDRGName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('location')]",
+            "name": "[variables('NETRGName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('location')]",
+            "name": "[variables('AVDRGName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[variables('location')]",
+            "name": "[variables('SIGRGName')]",
+            "properties": {}
+        }
+    ]
+}
