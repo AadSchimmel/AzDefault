@@ -90,10 +90,10 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Resources/resourceGroups",
+            "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[variables('PRDRGName')]",
+            "name": "PRDResourceGroup",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -101,17 +101,8 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "VirtualNetworkName": {
-                        "value": "[variables('PRDNetworkName')]"
-                    },
-                    "VirtualNetworkAddressRange": {
-                        "value": "[variables('PRDNetworkAddressRange')]"
-                    },
-                    "subnetName": {
-                        "value": "[variables('PRDsubnetName')]"
-                    },
-                    "subnetRange": {
-                        "value": "[variables('PRDsubnetRange')]"
+                    "PRDRGName": {
+                        "value": "[variables('PRDRGName')]"
                     },
                     "location": {
                         "value": "[variables('location')]"

@@ -7,42 +7,62 @@
             "metadata": {
                 "description": "The name of the Virtual Network to Create"
             }
+        },
+        "PRDRGName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Virtual Network to Create"
+            }
+        },
+        "NETRGName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Virtual Network to Create"
+            }
+        },
+        "AVDRGName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Virtual Network to Create"
+            }
+        },
+        "SIGRGName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Virtual Network to Create"
+            }
         }
     },
     "variables": {
-        "location": "westeurope",
-        "PRDRGName": "[concat('RG-PRD-', parameters('CustomerName'))]",
-        "NETRGName": "[concat('RG-NET-', parameters('CustomerName'))]",
-        "AVDRGName": "[concat('RG-AVD-', parameters('CustomerName'))]",
-        "SIGRGName": "[concat('RG-SIG-', parameters('CustomerName'))]"
+        "location": "westeurope"
     },
     "resources": [
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[variables('PRDRGName')]",
+            "name": "[parameters('PRDRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[variables('NETRGName')]",
+            "name": "[parameters('NETRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[variables('AVDRGName')]",
+            "name": "[parameters('AVDRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[variables('SIGRGName')]",
+            "name": "[parameters('SIGRGName')]",
             "properties": {}
         }
     ]
