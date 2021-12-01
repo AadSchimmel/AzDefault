@@ -31,35 +31,42 @@
             "metadata": {
                 "description": "The name of the Virtual Network to Create"
             }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Virtual Network to Create"
+            }
         }
-    },
-    "variables": {
-        "location": "westeurope"
     },
     "resources": [
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('location')]",
-            "name": "[parameters('PRDRGName')]"
+            "location": "[parameters('location')]",
+            "name": "[parameters('PRDRGName')]",
+            "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('location')]",
-            "name": "[parameters('NETRGName')]"
+            "location": "[parameters('location')]",
+            "name": "[parameters('NETRGName')]",
+            "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('location')]",
-            "name": "[parameters('AVDRGName')]"
+            "location": "[parameters('location')]",
+            "name": "[parameters('AVDRGName')]",
+            "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
-            "location": "[variables('location')]",
-            "name": "[parameters('SIGRGName')]"
+            "location": "[parameters('location')]",
+            "name": "[parameters('SIGRGName')]",
+            "properties": {}
         }
     ]
 }
