@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "CustomerName": {
@@ -41,29 +41,25 @@
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[parameters('PRDRGName')]",
-            "properties": {}
+            "name": "[parameters('PRDRGName')]"
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[parameters('NETRGName')]",
-            "properties": {}
+            "name": "[parameters('NETRGName')]"
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[parameters('AVDRGName')]",
-            "properties": {}
+            "name": "[parameters('AVDRGName')]"
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[variables('location')]",
-            "name": "[parameters('SIGRGName')]",
-            "properties": {}
+            "name": "[parameters('SIGRGName')]"
         }
     ]
 }
