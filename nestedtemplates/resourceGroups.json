@@ -5,37 +5,37 @@
         "CustomerName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the Virtual Network to Create"
+                "description": "The name of the Customer"
             }
         },
         "PRDRGName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the Virtual Network to Create"
+                "description": "The name of the Resource Group to Create"
             }
         },
         "NETRGName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the Virtual Network to Create"
+                "description": "The name of the Resource Group to Create"
             }
         },
         "AVDRGName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the Virtual Network to Create"
+                "description": "The name of the Resource Group to Create"
             }
         },
         "SIGRGName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the Virtual Network to Create"
+                "description": "The name of the Resource Group to Create"
             }
         },
         "location": {
             "type": "string",
             "metadata": {
-                "description": "The name of the Virtual Network to Create"
+                "description": "location"
             }
         }
     },

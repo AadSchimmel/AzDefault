@@ -30,9 +30,11 @@
         },
         "CustomerName": {
             "type": "string",
+            "minLength": 3,
+            "maxLength": 15,
             "defaultValue": "CustomerName",
             "metadata": {
-                "description": "Customer name."
+                "description": "Customer name, determines RG name."
             }
         },
         "ADVMName": {
