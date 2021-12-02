@@ -44,7 +44,7 @@
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2021-01-01",
             "location": "[parameters('location')]",
-            "name": "[parameters('PRDRGName')]",
+            "name": "[reference(parameters('PRDRGName'))]",
             "properties": {}
         },
         {
