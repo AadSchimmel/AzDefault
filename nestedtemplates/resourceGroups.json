@@ -42,28 +42,28 @@
     "resources": [
         {
             "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "2021-01-01",
             "location": "[parameters('location')]",
             "name": "[parameters('PRDRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "2021-01-01",
             "location": "[parameters('location')]",
             "name": "[parameters('NETRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "2021-01-01",
             "location": "[parameters('location')]",
             "name": "[parameters('AVDRGName')]",
             "properties": {}
         },
         {
             "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "2021-01-01",
             "location": "[parameters('location')]",
             "name": "[parameters('SIGRGName')]",
             "properties": {}
