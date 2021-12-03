@@ -1,6 +1,6 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
-    "contentVersion": "1.0.0.1",
+    "contentVersion": "1.0.0.0",
     "parameters": {
         "CustomerName": {
             "type": "string",
@@ -44,7 +44,7 @@
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2018-05-01",
             "location": "[parameters('location')]",
-            "name": "[parameters('PRDRGName')]",
+            "name": "[resourceId('Microsoft.Resources/resourceGroups', parameters('PRDRGName'))]",
             "properties": {}
         },
         {

@@ -39,6 +39,8 @@
         },
         "ADVMName": {
             "type": "string",
+            "minLength": 4,
+            "maxLength": 15,
             "defaultValue": "AD01",
             "metadata": {
                 "description": "AD Virtual machine name."
@@ -46,6 +48,8 @@
         },
         "SQLVMName": {
             "type": "string",
+            "minLength": 4,
+            "maxLength": 15,
             "defaultValue": "SQL01",
             "metadata": {
                 "description": "SQL Virtual machine name."
@@ -53,6 +57,8 @@
         },
         "APPVMName": {
             "type": "string",
+            "minLength": 4,
+            "maxLength": 15,
             "defaultValue": "APP01",
             "metadata": {
                 "description": "APP Virtual machine name."
