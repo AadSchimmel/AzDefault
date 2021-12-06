@@ -110,7 +110,7 @@
                 },
                 "parameters": {
                     "PRDRGName": {
-                        "value": "[variables('PRDRGName')]"
+                        "value": "[reference('Microsoft.Resources/resourceGroups', variables('PRDRGName'))]"
                     },
                     "location": {
                         "value": "[variables('location')]"
