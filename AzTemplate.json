@@ -67,6 +67,7 @@
     },
     "variables": {
         "Githublocation": "https://raw.githubusercontent.com/AadSchimmel/AzDefault/master/",
+        "resourceGroupTemplateUrl": "[uri(variables('Githublocation'), 'nestedtemplates/resourceGroups.json?raw=true')]",
         "location": "westeurope",
         "PRDNetworkAddressRange": "10.0.0.0/16",
         "NETNetworkAddressRange": "10.1.0.0/16",
@@ -105,12 +106,12 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('Githublocation'), concat('nestedtemplates/resourceGroups.json?raw=true'))]",
+                    "uri": "[variables('resourceGroupTemplateUrl')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "PRDRGName": {
-                        "value": "[reference('Microsoft.Resources/resourceGroups', variables('PRDRGName'))]"
+                        "value": "[variables('PRDRGName')]"
                     },
                     "location": {
                         "value": "[variables('location')]"
